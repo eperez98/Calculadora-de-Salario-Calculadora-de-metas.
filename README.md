@@ -1,5 +1,6 @@
 <div align="center">
 
+<img src="assets/icon.ico" alt="Salary & Goals Calculator" width="96" height="96">
 
 # Salary & Goals Calculator
 ### Calculadora de Salario & Metas
