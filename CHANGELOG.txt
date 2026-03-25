@@ -1,0 +1,293 @@
+================================================================================
+  SALARY & GOALS CALCULATOR — CALCULADORA DE SALARIO & METAS
+  by Erick Perez
+  Full Changelog — All Versions
+================================================================================
+
+--------------------------------------------------------------------------------
+  VERSION TIMELINE OVERVIEW
+--------------------------------------------------------------------------------
+
+  v0.1 Beta    ──► Initial release (Panama only)
+  v0.2 Beta    ──► Last public beta (Colombia, sessions, dark mode)
+  v0.3 Beta    ──► CANCELLED — never released publicly
+                   All work merged forward into v1.0 RC
+  v1.0 RC      ──► Release Candidate — March 15, 2026
+                   First production-ready version
+  v1.1         ──► Full release — March 24, 2026
+                   3 new countries, charts, hover detail, release notes window
+
+--------------------------------------------------------------------------------
+
+
+================================================================================
+  [v1.1]  Full Release
+  Release Date : March 24, 2026
+  Status       : CURRENT — Production
+================================================================================
+
+  ── NEW COUNTRIES (3) ────────────────────────────────────────────────────────
+
+  [+] USA 🇺🇸 — USD currency
+      • Social Security: 6.2% (wage base cap $168,600/yr 2024)
+      • Medicare: 1.45% (no cap)
+      • Federal Income Tax 2024 — single filer, standard deduction $14,600
+        Brackets: 10% → 12% → 22% → 24% → 32% → 35% → 37%
+      • Canvas-drawn flag: red/white stripes + blue canton with stars
+
+  [+] Costa Rica 🇨🇷 — CRC (₡) currency
+      • CCSS — Enfermedad y Maternidad (employee): 5.5%
+      • CCSS — Invalidez, Vejez y Muerte (IVM): 3.84%
+      • CCSS — Banco Popular + ASFA (approx): ~1%
+      • Impuesto sobre la Renta 2024 — 5 monthly tramos
+        Exento ≤ ₡929,000 → 10% → 15% → 20% → 25%
+        Applied on base salary after CCSS deductions
+      • Canvas-drawn flag: blue/white/red/white/blue bands
+
+  [+] Perú 🇵🇪 — PEN (S/) currency
+      • ONP (Oficina de Normalización Previsional): 13%
+        (Most common system; AFP alternative omitted for simplicity)
+      • Impuesto a la Renta 2024 — UIT 2024 = S/ 5,150
+        Deducción: 7 UIT (S/ 36,050/yr)
+        Tramos anuales: 8% (≤5 UIT) → 14% (≤20) → 17% (≤35) → 20% (≤45) → 30%
+      • Canvas-drawn flag: red/white/red vertical bands
+
+  ── NEW UI FEATURES ──────────────────────────────────────────────────────────
+
+  [+] Expense Breakdown Bar Chart (_draw_expense_bar_chart)
+      • Horizontal bar chart on results page — one bar per expense category
+      • Bars sorted descending by amount
+      • Each bar uses a distinct accent color from the theme palette
+      • Background track + filled bar + value label to the right
+      • Hover tooltip on each bar: "Category: amount (X.X%)"
+      • Hover implemented via Canvas tag_bind — no external widgets
+
+  [+] Savings Projection Line Chart (_draw_projection_chart)
+      • Line chart showing cumulative savings month-by-month
+      • Filled area under the line using accent_soft color
+      • Goal threshold line drawn in amber (#warning color)
+      • Line color transitions from accent blue → step_done green
+        at the month where savings >= goal
+      • Live hover dot: moves to nearest X point as mouse moves
+      • Hover tooltip: "Month N: amount" with ✓ prefix when goal reached
+      • X-axis month labels, Y-axis value grid lines (4 levels)
+
+  [+] Hover Detail Cards (_make_hover_row)
+      • Every result row in the results page now shows a dark popup
+        when the mouse enters the row or its value label
+      • Popup lists each individual line item that makes up the row total
+      • Example: "Salary & Taxes" row → popup shows CSS, Edu, ISR individually
+      • Implemented as a Toplevel with overrideredirect — no window chrome
+      • Alpha 0.96 transparency, auto-positioned below the hovered row
+      • Destroyed on mouse leave
+
+  [+] Release Notes Window (_show_release_notes)
+      • Accessible via "📋 Notas / Notes" button in the title bar
+      • Floating Toplevel window — 680×620, resizable, scrollable
+      • Dark title bar strip with version badge and release date
+      • Versioned cards: each version gets a bordered card
+      • Current version highlighted with green border
+      • Entry tags: NEW (green) / FIX (blue) / CHANGE (amber) / REMOVED (red)
+      • Full version history: v1.1 → v1.0 RC → v0.2 Beta → v0.1 Beta
+      • Fully bilingual: content switches with app language
+      • Footer with repo URL
+
+  ── OTHER CHANGES ────────────────────────────────────────────────────────────
+
+  [+] Splash screen updated — shows 6 flags: 🇵🇦 🇨🇴 🇲🇽 🇺🇸 🇨🇷 🇵🇪
+  [+] Splash edition string: "v1.1  •  🇵🇦 🇨🇴 🇲🇽 🇺🇸 🇨🇷 🇵🇪"
+  [+] Country pills on Profile step updated — shows all 6 countries
+  [+] Profile note updated: "v1.1 — Available: Panama / Colombia / Mexico /
+      USA / Costa Rica / Peru · Estimates."
+  [+] FLAG_DRAW_FN dict expanded with draw_flag_usa, draw_flag_costa_rica,
+      draw_flag_peru
+  [+] LANGS dicts updated — new tax keys for CR and PE (both ES and EN):
+      tax_ccss_cr, tax_ivm_cr, tax_ccss_ot_cr, tax_isr_cr, tax_onp_pe, tax_isr_pe
+  [+] LANGS dicts updated — new chart/UI keys:
+      p7_chart_exp, p7_chart_proj, p7_chart_mo, p7_chart_acc, p7_chart_goal,
+      p7_hover_detail, rn_btn, rn_title, rn_sub, rn_current, rn_history,
+      rn_new, rn_fix, rn_change, rn_removed, rn_close
+  [+] res_card() updated to accept optional 4th element per row (detail lines)
+      for hover popup — backward compatible (None = no hover)
+  [~] Version string bumped to v1.1 throughout app, splash, and boot screen
+  [~] Release date updated to 03/24/2026
+
+
+================================================================================
+  [v1.0 RC]  Release Candidate
+  Release Date : March 15, 2026
+  Status       : SUPERSEDED by v1.1
+================================================================================
+
+  This release incorporated all work from the cancelled v0.3 Beta cycle plus
+  a full UI rewrite targeting the Windows 11 Fluent Design language. The app
+  is now stable on Python 3.10 through 3.14 on Windows, macOS, and Linux.
+
+  ── NEW COUNTRY ──────────────────────────────────────────────────────────────
+
+  [+] Mexico / México 🇲🇽 — MXN currency support
+      • IMSS — Enfermedad y Maternidad  ~2.50%
+      • IMSS — Invalidez y Vida         ~0.63%
+      • IMSS — Retiro (AFORE)           ~1.13%
+      • IMSS — Guarderías y Prestaciones~1.00%
+      • ISR — 2024 progressive monthly table, 10 brackets (1.92% → 35%)
+
+  [-] USA removed from country list (incomplete data — returned in v1.1)
+
+  ── UI ARCHITECTURE — COMPLETE REWRITE ───────────────────────────────────────
+
+  [+] Dual-navigation system:
+      • SideStepBar — vertical sidebar (Win11 Navigation Pane style)
+      • TopStepBar  — horizontal breadcrumb pip row with live state colors
+
+  [+] FluentEntry   — animated 2px bottom accent bar on focus
+  [+] FluentButton  — press / hover / release states with optional PIL icon
+  [+] fluent_card() — white surface + 1px border + 2px shadow strip
+  [+] section_title() — colored pill badge + bold title + accent separator
+
+  ── PIL ICON SYSTEM ───────────────────────────────────────────────────────────
+
+  [+] _draw_circle_icon — 2× supersample + LANCZOS downscale
+  [+] _draw_pill_icon   — rounded rectangle variant
+  [+] _icon_cache       — all icons cached, no re-render on theme switch
+  [+] make_step_icon    — pending / active / done states
+  [+] make_sidebar_icon — colored per step, ASCII symbols (no emoji)
+
+  ── ANIMATION ENGINE ─────────────────────────────────────────────────────────
+
+  [+] Tweener class — 60fps, easing: out_cubic / out_quad / in_out / spring
+  [+] animate_count() — result values count up from 0 on load
+
+  ── RESULTS PAGE ─────────────────────────────────────────────────────────────
+
+  [+] Circular progress ring (savings % of income)
+  [+] Animated count-up on all three summary values
+  [+] Ring + stats side-by-side layout
+
+  ── TOOLTIP SYSTEM ───────────────────────────────────────────────────────────
+
+  [+] Tooltip class — dark popup 4px below widget, auto-destroyed on leave
+
+  ── THEMES ───────────────────────────────────────────────────────────────────
+
+  [+] THEME_LIGHT — full Fluent Win11 Light spec (#f3f3f3 / #0067c0)
+  [+] THEME_DARK  — full Fluent Win11 Dark spec (#202020 / #60cdff)
+
+  ── PYTHON 3.14 CRASH FIXES ──────────────────────────────────────────────────
+
+  [FIXED] Crash — dual tk.Tk() before root.update()
+  [FIXED] Crash — tk.Label(font="") → TclError on Windows
+  [FIXED] Crash — tk.Label(image=None)
+  [FIXED] Crash — STEP_ICONS used W11 dict at module load time
+  [FIXED] Duplicate function definitions (section_title, note_box, StepBar…)
+
+  ── OTHER ────────────────────────────────────────────────────────────────────
+
+  [+] Pillow added as required dependency
+  [-] All "Beta" labels removed from app UI and strings
+
+
+================================================================================
+  [v0.3 Beta]  CANCELLED — Never Released
+  Status       : CANCELLED — Merged into v1.0 RC
+================================================================================
+
+  v0.3 Beta was never publicly released. All completed work was merged into
+  v1.0 RC and shipped there.
+
+  ── COMPLETED BEFORE CANCELLATION ────────────────────────────────────────────
+
+  [+] Mexico 🇲🇽 IMSS + ISR 2024 monthly table
+  [+] USA 🇺🇸 stub (incomplete — removed, returned properly in v1.1)
+  [+] Canvas-drawn country flags (no image files)
+  [+] Win11 Light/Dark themes (initial implementation)
+  [+] Animated splash screen (first version, Toplevel — later fixed)
+  [+] Language boot screen (first version, Toplevel — later fixed)
+
+  ── REASON FOR CANCELLATION ──────────────────────────────────────────────────
+
+  Repeated crashes on Python 3.14 (Windows). Single-root architecture was
+  designed and implemented in v1.0 RC instead of patching v0.3.
+
+
+================================================================================
+  [v0.2 Beta]  Multi-Country Release
+  Status       : SUPERSEDED
+================================================================================
+
+  [+] Language boot screen — EN/ES selection before splash loads
+  [+] Dark mode / Light mode — live toggle, no restart
+  [+] Save & load named sessions — local JSON (~/.salary_calc_sessions.json)
+  [+] Colombia 🇨🇴 — Pensión 4% + Salud 4% + Retención en la Fuente UVT 2024
+  [+] Country flag canvas preview in combobox dropdown
+  [+] Country tag pills on Profile step
+  [~] Splash updated with language-aware loading messages
+  [~] Results page shows country name and currency symbol
+  [~] PDF report includes country and currency information
+  [FIX] Session data not persisting between step navigation
+  [FIX] PDF generation failing with special characters in name field
+
+
+================================================================================
+  [v0.1 Beta]  Initial Release — Panama Only
+  Status       : SUPERSEDED
+================================================================================
+
+  [+] 8-step guided calculator (Profile → Goal → Income → Home →
+      Debts → Leisure → Extras → Results)
+  [+] Panama 🇵🇦 — CSS 9.75% + Educational Insurance 1.25% + ISR progressive
+      (0% ≤ $11k/yr · 15% ≤ $50k/yr · 25% above)
+  [+] Pay stub override — enter actual received salary
+  [+] Bilingual EN/ES interface — full LANGS translation dictionary
+  [+] PDF export via reportlab — bilingual formatted report
+  [+] Animated splash screen — bouncing coin + progress bar
+  [+] Horizontal step bar — pending / active / done states
+  [+] Animated number counters on results page
+  [+] Multi-session — New Query without closing the app
+
+  [!] Panama only — no other country support
+  [!] No session save/load
+  [!] No dark mode
+  [!] Python 3.14 incompatible (fixed in v1.0 RC)
+
+
+================================================================================
+  DEPENDENCY HISTORY
+================================================================================
+
+  v0.1 Beta   :  pip install reportlab
+  v0.2 Beta   :  pip install reportlab
+  v0.3 Beta   :  pip install reportlab          (cancelled — never public)
+  v1.0 RC     :  pip install reportlab pillow
+  v1.1        :  pip install reportlab pillow   (unchanged)
+
+
+================================================================================
+  PYTHON VERSION COMPATIBILITY
+================================================================================
+
+  v0.1 Beta   :  Python 3.10–3.12 ✅  |  Python 3.14 ❌
+  v0.2 Beta   :  Python 3.10–3.12 ✅  |  Python 3.14 ❌
+  v0.3 Beta   :  Python 3.14 ❌  (primary reason for cancellation)
+  v1.0 RC     :  Python 3.10–3.14 ✅  |  All platforms ✅
+  v1.1        :  Python 3.10–3.14 ✅  |  All platforms ✅
+
+
+================================================================================
+  PLATFORM NOTES
+================================================================================
+
+  Windows 10/11  :  Primary development platform — fully tested
+  macOS          :  Functional — SF Pro font used instead of Segoe UI
+  Linux (Ubuntu) :  Functional — sudo apt install python3-tk
+                    Icons use DejaVu Sans Bold fallback
+
+  Note on emoji:  PIL cannot render color emoji on Windows TrueType fallback.
+  All UI icons use ASCII characters drawn via PIL for cross-platform stability.
+
+
+================================================================================
+  END OF CHANGELOG
+  Salary & Goals Calculator — by Erick Perez — Panama 🇵🇦
+  https://github.com/eperez98/Calculadora-de-Salario-Calculadora-de-metas
+================================================================================
